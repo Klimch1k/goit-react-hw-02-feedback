@@ -1,14 +1,9 @@
-import PropTypes from 'prop-types';
+
 import React, { Component } from 'react';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Button from 'react-bootstrap/Button';
-import {
-  FeedbackBox,
-  FeedbackTitle,
-  FeedbackListBox,
-  FeedbackListTitle,
-} from './Feedback.styled';
-import ListGroup from 'react-bootstrap/ListGroup';
+import Statistics from 'components/Statistics/Statistics';
+import FeedbackOptions from 'components/FeedbackOptions/FeedbackOptions';
+import Section from 'components/Section/Section';
+import Notification from 'components/Notification/Notification';
 
 class Feedback extends Component {
   state = {
@@ -17,9 +12,9 @@ class Feedback extends Component {
     bad: 0,
   };
 
-  handleClick = ({ target: { id } }) => {
+  handleClick = e => {
     this.setState(prevState => ({
-      [id]: prevState[id] + 1,
+      [e]: prevState[e] + 1,
     }));
   };
 
@@ -36,57 +31,30 @@ class Feedback extends Component {
 
   render() {
     const totalFeedback = this.countTotalFeedback();
-const positiveFeedbackPercentage = this.countPositiveFeedbackPercentage();
+    const positivePercentage = this.countPositiveFeedbackPercentage();
     return (
-      <FeedbackBox>
-        <FeedbackTitle>Please leave feedback</FeedbackTitle>
-        <ButtonGroup size="lg">
-          <Button
-            id="good"
-            onClick={this.handleClick}
-            variant="success"
-            size="sm"
-          >
-            Good
-          </Button>
-          <Button
-            id="neutral"
-            onClick={this.handleClick}
-            variant="secondary"
-            size="sm"
-          >
-            Neutral
-          </Button>
-          <Button
-            id="bad"
-            onClick={this.handleClick}
-            variant="danger"
-            size="sm"
-          >
-            Bad
-          </Button>
-        </ButtonGroup>
-        <FeedbackListBox>
-          <FeedbackListTitle>Statistics</FeedbackListTitle>
-          <ListGroup>
-            <ListGroup.Item variant="success">
-              Good: {this.state.good}
-            </ListGroup.Item>
-            <ListGroup.Item variant="secondary">
-              Neutral: {this.state.neutral}
-            </ListGroup.Item>
-            <ListGroup.Item variant="danger">
-              Bad: {this.state.bad}
-            </ListGroup.Item>
-            <ListGroup.Item variant="primary">
-              Total: {totalFeedback}
-            </ListGroup.Item>
-            <ListGroup.Item variant="info">
-              Positive feedback: {positiveFeedbackPercentage}%
-            </ListGroup.Item>
-          </ListGroup>
-        </FeedbackListBox>
-      </FeedbackBox>
+      <Section title={'Please leave feedback'}>
+        <FeedbackOptions
+          options={[
+            { feedback: 'good', variant: 'success' },
+            { feedback: 'neutral', variant: 'secondary' },
+            { feedback: 'bad', variant: 'danger' },
+          ]}
+          onLeaveFeedback={this.handleClick}
+        ></FeedbackOptions>
+
+        {totalFeedback > 0 ? (
+          <Statistics
+            good={this.state.good}
+            neutral={this.state.neutral}
+            bad={this.state.bad}
+            total={totalFeedback}
+            positivePercentage={positivePercentage}
+          ></Statistics>
+        ) : (
+          <Notification notification={'There is no feedback'}></Notification>
+        )}
+      </Section>
     );
   }
 }
