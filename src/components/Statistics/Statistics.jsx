@@ -1,11 +1,10 @@
-import { FeedbackListBox, FeedbackListTitle } from './Statistics.styled';
+import { FeedbackListBox } from './Statistics.styled';
 import ListGroup from 'react-bootstrap/ListGroup';
 import propTypes from 'prop-types';
 
 const Statistics = ({ good, neutral, bad, total, positivePercentage }) => {
   return (
     <FeedbackListBox>
-      <FeedbackListTitle>Statistics</FeedbackListTitle>
       <ListGroup>
         <ListGroup.Item variant="success">Good: {good}</ListGroup.Item>
         <ListGroup.Item variant="secondary">Neutral: {neutral}</ListGroup.Item>

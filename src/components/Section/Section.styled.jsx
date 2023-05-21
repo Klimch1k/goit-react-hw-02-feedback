@@ -7,7 +7,8 @@ export const FeedbackBox = styled.div`
   align-items: center;
 `;
 
-export const FeedbackTitle = styled.h1`
+export const FeedbackTitle = styled.h2`
   margin-top: 30px;
   margin-bottom: 30px;
 `;
+

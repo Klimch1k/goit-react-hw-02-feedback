@@ -33,30 +33,34 @@ class Feedback extends Component {
     const totalFeedback = this.countTotalFeedback();
     const positivePercentage = this.countPositiveFeedbackPercentage();
     return (
-      <Section title={'Please leave feedback'}>
-        <FeedbackOptions
-          options={[
-            { feedback: 'good', variant: 'success' },
-            { feedback: 'neutral', variant: 'secondary' },
-            { feedback: 'bad', variant: 'danger' },
-          ]}
-          onLeaveFeedback={this.handleClick}
-        ></FeedbackOptions>
-
-        {totalFeedback > 0 ? (
-          <Statistics
-            good={this.state.good}
-            neutral={this.state.neutral}
-            bad={this.state.bad}
-            total={totalFeedback}
-            positivePercentage={positivePercentage}
-          ></Statistics>
-        ) : (
-          <Notification notification={'There is no feedback'}></Notification>
-        )}
-      </Section>
+      <div>
+        <Section title={'Please leave feedback'}>
+          <FeedbackOptions
+            options={[
+              { feedback: 'good', variant: 'success' },
+              { feedback: 'neutral', variant: 'secondary' },
+              { feedback: 'bad', variant: 'danger' },
+            ]}
+            onLeaveFeedback={this.handleClick}
+          />
+        </Section>
+        <Section title={'Statistics'}>
+          {totalFeedback > 0 ? (
+            <Statistics
+              good={this.state.good}
+              neutral={this.state.neutral}
+              bad={this.state.bad}
+              total={totalFeedback}
+              positivePercentage={positivePercentage}
+            />
+          ) : (
+            <Notification notification={'There is no feedback'}></Notification>
+          )}
+        </Section>
+      </div>
     );
   }
+         
 }
 
 export default Feedback;
